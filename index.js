@@ -47,7 +47,7 @@ async function question1() {
     message: "Javascript was created in 10 days and released on what date? \n",
     choices: [
       "May 23rd. 1995",
-      "NOv 24th, 1995",
+      "Nov 24th, 1995",
       "Dec 4th, 1995",
       "Apr 13th, 1996",
     ],
@@ -68,4 +68,16 @@ async function handleAnswer(isCorrect) {
   return spinner.success({ text: `Nice Work ${player_name}.` });
 }
 
+function winner() {
+  console.clear();
+  const msg = `Congrats ${player_name}. \n You've won this quiz challenge`;
+
+  figlet(msg, (_, data) => {
+    console.log(gradient.pastel.multiline(data));
+  });
+}
+
+await welcomeText();
+await getName();
 await question1();
+await winner();
