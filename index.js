@@ -26,3 +26,46 @@ async function welcomeText() {
   So get all the questions right...
   `);
 }
+
+async function getName() {
+  const answers = await inquirer.prompt({
+    name: "player_name",
+    type: "input",
+    message: "What is your name?",
+    default() {
+      return "Player";
+    },
+  });
+
+  player_name = answers.player_name;
+}
+
+async function question1() {
+  const answers = await inquirer.prompt({
+    name: "question_1",
+    type: "list",
+    message: "Javascript was created in 10 days and released on what date? \n",
+    choices: [
+      "May 23rd. 1995",
+      "NOv 24th, 1995",
+      "Dec 4th, 1995",
+      "Apr 13th, 1996",
+    ],
+  });
+
+  return handleAnswer(answers.question_1 === "Dec 4th, 1995");
+}
+
+async function handleAnswer(isCorrect) {
+  const spinner = createSpinner("checking answer...").start();
+  await timeout();
+
+  if (!isCorrect) {
+    spinner.error({ text: `Oops. Game over, you lose!` });
+    return process.exit(1);
+  }
+
+  return spinner.success({ text: `Nice Work ${player_name}.` });
+}
+
+await question1();
